@@ -11,7 +11,7 @@ const BelanjaScreen = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://192.168.1.11:3000/api/products');
+        const response = await fetch('https://f750-180-253-187-87.ngrok-free.app/api/products');
         const data = await response.json();
         setProdukData(data);
       } catch (error) {

@@ -15,7 +15,7 @@ export default function BuyerRegistrationScreen({ navigation }) {
       }
 
       // Kirim data ke backend
-      const response = await fetch('http://192.168.1.11:3000/api/buyer-registration', {
+      const response = await fetch('https://f750-180-253-187-87.ngrok-free.app/api/buyer-registration', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

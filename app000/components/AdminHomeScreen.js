@@ -9,8 +9,6 @@ export default function AdminHomeScreen() {
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('ready');
-  const [likes, setLikes] = useState(0);
-  const [rating, setRating] = useState(0);
   const [products, setProducts] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -36,8 +34,7 @@ export default function AdminHomeScreen() {
 
   const addProduct = async () => {
     try {
-      // Kirim data ke backend
-      const response = await fetch('http://192.168.1.26:3000/api/add-product', {
+      const response = await fetch('https://f750-180-253-187-87.ngrok-free.app/api/add-product', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,8 +45,6 @@ export default function AdminHomeScreen() {
           price,
           description,
           status,
-          likes,
-          rating,
         }),
       });
 
@@ -59,10 +54,7 @@ export default function AdminHomeScreen() {
 
       const result = await response.json();
       Alert.alert('Success', result.message || 'Produk berhasil ditambahkan');
-      setProducts([
-        ...products,
-        { id: Date.now().toString(), image, name, price, description, status, likes, rating }
-      ]);
+      setProducts([...products, { id: Date.now().toString(), image, name, price, description, status }]);
       setImage(null);
       setName('');
       setPrice('');
@@ -85,8 +77,6 @@ export default function AdminHomeScreen() {
       <Text style={styles.productName}>Nama: {item.name}</Text>
       <Text style={styles.productName}>Harga: {item.price}</Text>
       <Text style={styles.productDescription}>{item.description}</Text>
-      <Text>Likes: {item.likes}</Text>
-      <Text>Rating: {item.rating}</Text>
       <View style={styles.productActions}>
         <Button title="Hapus" onPress={() => deleteProduct(item.id)} />
         <Picker
@@ -152,20 +142,6 @@ export default function AdminHomeScreen() {
             <Picker.Item label="Ready" value="ready" />
             <Picker.Item label="Soldout" value="soldout" />
           </Picker>
-          <TextInput
-            style={styles.input}
-            placeholder="Likes"
-            value={likes.toString()}
-            onChangeText={(text) => setLikes(parseInt(text, 10))}
-            keyboardType="numeric"
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Rating"
-            value={rating.toString()}
-            onChangeText={(text) => setRating(parseFloat(text))}
-            keyboardType="numeric"
-          />
           <View style={styles.modalActions}>
             <Button title="Simpan" onPress={addProduct} />
             <Button title="Tutup" onPress={() => setModalVisible(false)} />
@@ -177,6 +153,7 @@ export default function AdminHomeScreen() {
         data={products}
         renderItem={renderProduct}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingBottom: 20 }}
       />
     </View>
   );

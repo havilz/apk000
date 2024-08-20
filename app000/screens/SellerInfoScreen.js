@@ -21,7 +21,7 @@ export default function SellerInfoScreen({ route, navigation }) {
 
   const handleSubmit = () => {
     if (isFormValid()) {
-      fetch('http://192.168.1.11:3000/api/seller-info', {
+      fetch('https://f750-180-253-187-87.ngrok-free.app/api/seller-info', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
